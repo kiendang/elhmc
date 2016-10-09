@@ -11,7 +11,8 @@ Description: A tool to draw samples from a Empirical Likelihood Bayesian posteri
 Imports:
   emplik,
   plyr,
-  stats
+  stats,
+  MASS
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1

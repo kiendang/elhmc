@@ -5,7 +5,8 @@
 \title{Empirical Likelihood Hamiltonian Monte Carlo Sampling}
 \usage{
 ELHMC(initial, data, fun, dfun, prior, dprior, n.samples = 100,
-  lf.steps = 10, epsilon = 0.05, tol = 10^-5, detailed = FALSE)
+  lf.steps = 10, epsilon = 0.05, p.variance = 1, tol = 10^-5,
+  detailed = FALSE)
 }
 \arguments{
 \item{initial}{A vector containing the initial values of the parameters}
@@ -34,6 +35,11 @@ update}
 
 \item{epsilon}{The leap frog step size(s). This has to be a single numeric
 value or a vector of the same length as \code{initial}.}
+
+\item{p.variance}{The diagonal of the covariance matrix of a multivariate
+normal distribution used to generate the initial values of momentum \eqn{p}
+in Hamiltonian Monte Carlo. This has to be a single numeric value or
+a vector of the same length as \code{initial}.}
 
 \item{tol}{EL tolerance}
 

@@ -1,7 +1,10 @@
 #'@importFrom stats runif rnorm
-HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, detailed = FALSE, ...) {
+#'@importFrom MASS mvrnorm
+HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, p.variance = 1,
+                detailed = FALSE, ...) {
   current.q <- q <- initial
-  current.p <- p <- rnorm(length(initial), 0, 1)
+  current.p <- p <- mvrnorm(length(initial), rep(0, length(initial)),
+                            diag(p.variance))
 
   if(detailed) {
     n.col.q <- n.col.p <- length(initial)

@@ -21,6 +21,10 @@
 #'  update
 #'@param epsilon The leap frog step size(s). This has to be a single numeric
 #'  value or a vector of the same length as \code{initial}.
+#'@param p.variance The diagonal of the covariance matrix of a multivariate
+#'  normal distribution used to generate the initial values of momentum \eqn{p}
+#'  in Hamiltonian Monte Carlo. This has to be a single numeric value or
+#'  a vector of the same length as \code{initial}.
 #'@param tol EL tolerance
 #'@param detailed If this is set to \code{TRUE}, the function will return a list
 #'  with extra information.
@@ -91,7 +95,8 @@
 #'@export
 #'
 ELHMC <- function(initial, data, fun, dfun, prior, dprior,
-                  n.samples = 100, lf.steps = 10, epsilon = 0.05, tol = 10^-5,
+                  n.samples = 100, lf.steps = 10, epsilon = 0.05,
+                  p.variance = 1, tol = 10^-5,
                   detailed = FALSE) {
   if(!(is.vector(initial) && is.numeric(initial))) {
     stop("initial must be a number or a numeric vector")
@@ -161,7 +166,8 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
     next.sample <- HMC(current.value, U = ELU, epsilon = epsilon,
                        lf.steps = lf.steps, detailed = detailed,
                        data = data, fun = fun, dfun = dfun,
-                       prior = prior, dprior = dprior, tol = tol)
+                       prior = prior, dprior = dprior, p.variance = p.variance,
+                       tol = tol)
     samples[i, ] <- current.value <- if(next.sample$accepted) {
       next.sample$proposed.value
     } else {
