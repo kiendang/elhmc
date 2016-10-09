@@ -3,7 +3,7 @@
 #'This function draws samples from a Empirical Likelihood Bayesian posterior
 #'distribution of parameters using Hamiltonian Monte Carlo.
 #'
-#'@param initial A vector containing the initial values of the parameter
+#'@param initial A vector containing the initial values of the parameters
 #'@param data A matrix containing the data
 #'@param fun The estimating function \eqn{g}. It takes in a parameter vector
 #'\code{params} as the first argument and a data point vector \code{x} as the
@@ -12,11 +12,10 @@
 #'\eqn{g}. It takes in a parameter vector \code{params} as the first argument
 #'  and a data point vector \code{x} as the second argument. This function
 #'  returns a matrix.
-#'
-#'@param prior A function with one argument \code{x} that returns
-#'  the prior density of the parameter of interest
+#'@param prior A function with one argument \code{x} that returns a vector
+#'  containing the prior densities of the parameters of interest
 #'@param dprior A function with one argument \code{x} that returns
-#'  the gradient of the density of the parameter of interest
+#'  the gradient of the log densities of the parameters of interest
 #'@param n.samples Number of samples to draw
 #'@param lf.steps Number of leap frog steps in each Hamiltonian Monte Carlo
 #'  update
@@ -38,7 +37,7 @@
 #'  and the gradient of \eqn{g} as \code{dfun}.
 #'@return The function returns a list with the following elements:
 #'  \item{\code{samples}}{A matrix containing the parameter samples}
-#'  \item{\code{acceptance.rate}}{The acceptance rate (numeric)}
+#'  \item{\code{acceptance.rate}}{The acceptance rate}
 #'
 #'  If \code{detailed = TRUE}, the list contains these extra elements:
 #'  \item{\code{proposed}}{A matrix containing the proposed values at

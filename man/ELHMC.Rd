@@ -8,7 +8,7 @@ ELHMC(initial, data, fun, dfun, prior, dprior, n.samples = 100,
   lf.steps = 10, epsilon = 0.05, tol = 10^-5, detailed = FALSE)
 }
 \arguments{
-\item{initial}{A vector containing the initial values of the parameter}
+\item{initial}{A vector containing the initial values of the parameters}
 
 \item{data}{A matrix containing the data}
 
@@ -21,11 +21,11 @@ ELHMC(initial, data, fun, dfun, prior, dprior, n.samples = 100,
  and a data point vector \code{x} as the second argument. This function
  returns a matrix.}
 
-\item{prior}{A function with one argument \code{x} that returns
-the prior density of the parameter of interest}
+\item{prior}{A function with one argument \code{x} that returns a vector
+containing the prior densities of the parameters of interest}
 
 \item{dprior}{A function with one argument \code{x} that returns
-the gradient of the density of the parameter of interest}
+the gradient of the log densities of the parameters of interest}
 
 \item{n.samples}{Number of samples to draw}
 
@@ -42,7 +42,7 @@ with extra information.}
 \value{
 The function returns a list with the following elements:
  \item{\code{samples}}{A matrix containing the parameter samples}
- \item{\code{acceptance.rate}}{The acceptance rate (numeric)}
+ \item{\code{acceptance.rate}}{The acceptance rate}
 
  If \code{detailed = TRUE}, the list contains these extra elements:
  \item{\code{proposed}}{A matrix containing the proposed values at
