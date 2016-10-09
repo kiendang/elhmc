@@ -2,17 +2,16 @@
 #'@importFrom MASS mvrnorm
 HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, p.variance = 1,
                 detailed = FALSE, ...) {
+  n <- length(initial)
   current.q <- q <- initial
-  current.p <- p <- mvrnorm(length(initial), rep(0, length(initial)),
-                            diag(p.variance))
+  current.p <- p <- mvrnorm(1, rep(0, n), diag(p.variance))
 
   if(detailed) {
-    n.col.q <- n.col.p <- length(initial)
     n.row.q <- lf.steps + 1
     n.row.p <- lf.steps + 2
     
-    trajectory.q <- matrix(NA, n.row.q, n.col.q)
-    trajectory.p <- matrix(NA, n.row.p, n.col.p)
+    trajectory.q <- matrix(NA, n.row.q, n)
+    trajectory.p <- matrix(NA, n.row.p, n)
 
     count.q <- 1
     count.p <- 1
@@ -106,13 +105,13 @@ HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, p.variance = 1,
       trajectory.p <- trajectory.p[1:count.p, ]
 
       result <- list(current.value = current.q,
-                     proposed.value = rep(NA, length(initial)),
+                     proposed.value = rep(NA, n),
                      accepted = FALSE,
                      trajectory = list(trajectory.q = trajectory.q,
                                        trajectory.p = trajectory.p))
     } else {
       result <- list(current.value = current.q,
-                     proposed.value = rep(NA, length(initial)),
+                     proposed.value = rep(NA, n),
                      accepted = FALSE)
     }
 
