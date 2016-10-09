@@ -3,6 +3,11 @@
 HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, p.variance = 1,
                 detailed = FALSE, ...) {
   n <- length(initial)
+  
+  if(length(p.variance) == 1) {
+    p.variance <- rep(p.variance, n)
+  }
+  
   current.q <- q <- initial
   current.p <- p <- mvrnorm(1, rep(0, n), diag(p.variance))
 
