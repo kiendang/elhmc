@@ -139,6 +139,16 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
   if(any(epsilon <= 0)) {
     stop("epsilon must be all positive")
   }
+  
+  if(!(is.vector(p.variance) && is.numeric(p.variance) &&
+       (length(p.variance) == 1) || length(p.variance) == length(initial))) {
+    stop(paste("p.variance must be a single numeric value or",
+               "a numeric vector of the same length as initial"))
+  }
+  
+  if(any(p.variance < 0)) {
+    stop("p.variance must be all at least 0")
+  }
 
   if(tol <= 0) {
     stop("tol must be positive")
