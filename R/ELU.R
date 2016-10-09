@@ -10,7 +10,7 @@ ELU <- function(x, data, fun, dfun, prior, dprior, tol) {
   density <- prior(x)
   density.gradient <- dprior(x)
 
-  el <- emplik::el.test(fun.results, rep(0, length(x)))
+  el <- emplik::el.test(fun.results, rep(0, ncol(fun.results)))
 
   if(abs(mean(el$wts) - 1) > tol) {
     CustomStop("invalid_el_weight_sum",
