@@ -13,8 +13,8 @@ ELU <- function(x, data, fun, dfun, prior, dprior, tol) {
   el <- emplik::el.test(fun.results, rep(0, ncol(fun.results)))
 
   if(abs(mean(el$wts) - 1) > tol) {
-    CustomStop("invalid_el_weight_sum",
-                "Sum of EL weights is not close enough to 1.")
+    CustomStop("invalid_el_weight_mean",
+                "Mean of EL weights is not close enough to 1.")
   }
 
   u <- - sum(log(density)) - sum(log(el$wts / length(el$wts)))

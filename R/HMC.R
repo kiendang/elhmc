@@ -77,7 +77,7 @@ HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, detailed = FALSE, ...
            proposed.value = proposed.value,
            accepted = accepted)
     }
-  }, invalid_el_weight_sum = function(e) {
+  }, invalid_el_weight_mean = function(e) {
     if(detailed) {
       trajectory.q <- trajectory.q[1:count.q, ]
       trajectory.p <- trajectory.p[1:count.p, ]
