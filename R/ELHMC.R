@@ -19,7 +19,8 @@
 #'@param n.samples Number of samples to draw
 #'@param lf.steps Number of leap frog steps in each Hamiltonian Monte Carlo
 #'  update
-#'@param epsilon The leap frog step size
+#'@param epsilon The leap frog step size(s). This has to be a single numeric
+#'  value or a vector of the same length as \code{initial}.
 #'@param tol EL tolerance
 #'@param detailed If this is set to \code{TRUE}, the function will return a list
 #'  with extra information.
@@ -123,9 +124,15 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
   if(lf.steps < 1) {
     stop("lf.steps must be at least 1")
   }
+  
+  if(!(is.vector(epsilon) && is.numeric(epsilon) &&
+       (length(epsilon) == 1) || length(epsilon) == length(initial))) {
+    stop(paste("epsilon must be a single numeric value or",
+               "a numeric vector of the same length as initial"))
+  }
 
-  if(epsilon <= 0) {
-    stop("epsilon must be positive")
+  if(any(epsilon <= 0)) {
+    stop("epsilon must be all positive")
   }
 
   if(tol <= 0) {

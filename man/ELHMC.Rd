@@ -32,7 +32,8 @@ the gradient of the log densities of the parameters of interest}
 \item{lf.steps}{Number of leap frog steps in each Hamiltonian Monte Carlo
 update}
 
-\item{epsilon}{The leap frog step size}
+\item{epsilon}{The leap frog step size(s). This has to be a single numeric
+value or a vector of the same length as \code{initial}.}
 
 \item{tol}{EL tolerance}
 
