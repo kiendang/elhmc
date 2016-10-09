@@ -4,14 +4,24 @@ HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, detailed = FALSE, ...
   current.p <- p <- rnorm(length(initial), 0, 1)
 
   if(detailed) {
-    trajectory.q <- matrix(NA, lf.steps + 1, length(initial))
-    trajectory.p <- matrix(NA, lf.steps + 2, length(initial))
+    n.col.q <- n.col.p <- length(initial)
+    n.row.q <- lf.steps + 1
+    n.row.p <- lf.steps + 2
+    
+    trajectory.q <- matrix(NA, n.row.q, n.col.q)
+    trajectory.p <- matrix(NA, n.row.p, n.col.p)
 
     count.q <- 1
     count.p <- 1
 
     trajectory.q[count.q, ] <- q
     trajectory.p[count.p, ] <- p
+    
+    step.q <- 0
+    step.p <- 0
+    
+    rownames(trajectory.q) <- rep(0, n.row.q)
+    rownames(trajectory.p) <- rep(0, n.row.p)
   }
 
   result <- tryCatch({
@@ -21,6 +31,8 @@ HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, detailed = FALSE, ...
     if(detailed) {
       count.p <- count.p + 1
       trajectory.p[count.p, ] <- p
+      step.p <- step.p + 0.5
+      rownames(trajectory.p)[count.p] <- step.p
     }
 
     if(lf.steps > 1) {
@@ -30,6 +42,8 @@ HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, detailed = FALSE, ...
         if(detailed) {
           count.q <- count.q + 1
           trajectory.q[count.q, ] <- q
+          step.q <- step.q + 1
+          rownames(trajectory.q)[count.q] <- step.q
         }
 
         u <- U(q, ...)
@@ -38,6 +52,8 @@ HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, detailed = FALSE, ...
         if(detailed) {
           count.p <- count.p + 1
           trajectory.p[count.p, ] <- p
+          step.p <- step.p + 1
+          rownames(trajectory.p)[count.p] <- step.p
         }
       }
     }
@@ -47,6 +63,8 @@ HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, detailed = FALSE, ...
     if(detailed) {
       count.q <- count.q + 1
       trajectory.q[count.q, ] <- q
+      step.q <- step.q + 1
+      rownames(trajectory.q)[count.q] <- step.q
     }
 
     u <- proposed.U <- U(q, ...)
@@ -55,6 +73,8 @@ HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, detailed = FALSE, ...
     if(detailed) {
       count.p <- count.p + 1
       trajectory.p[count.p, ] <- p
+      step.p <- step.p + 0.5
+      rownames(trajectory.p)[count.p] <- step.p
     }
 
     current.K <- sum(current.p ^ 2) / 2
