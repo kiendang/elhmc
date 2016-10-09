@@ -1,12 +1,12 @@
 #'@importFrom plyr aaply
 ELU <- function(x, data, fun, dfun, prior, dprior, tol) {
-  fun.results <- aaply(data, 1, function(d) {
+  fun.results <- unname(aaply(data, 1, function(d) {
     fun(params = x, x = d)
-  })
+  }))
 
-  fun.gradients <- aaply(data, 1, function(d) {
+  fun.gradients <- unname(aaply(data, 1, function(d) {
     dfun(params = x, x = d)
-  })
+  }))
 
   density <- prior(x)
   density.gradient <- dprior(x)
@@ -25,7 +25,7 @@ ELU <- function(x, data, fun, dfun, prior, dprior, tol) {
   {
     dellogL[i, ] <- el$wts[i] * t(as.matrix(el$lambda)) %*% fun.gradients[i, , ]
   }
-  gradient <- aaply(dellogL, 2, sum) - density.gradient
+  gradient <- unname(aaply(dellogL, 2, sum)) - density.gradient
 
   result <- u
   attr(result, "gradient") <- gradient
