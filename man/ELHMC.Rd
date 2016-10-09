@@ -84,18 +84,22 @@ df <- function(params, x) {
  rbind(c(-1, 0), c(0, -1))
 }
 ## Draw 50 samples from the Empirical Likelihood Bayesian posterior distribution
-## of the mean, using initial values (0.96, 0.97) and a standard normal distribution
-## as the prior:
+## of the mean, using initial values (0.96, 0.97) and standard normal distributions
+## as priors:
 normal_prior <- function(x) {
- exp(-0.5 * x ^ 2) / sqrt(2 * pi)
+ sapply(x, function(a) {
+   exp(-0.5 * a ^ 2) / sqrt(2 * pi)
+ })
 }
-normal_prior_gradient <- function(x) {
- -x * exp(-0.5 * x ^ 2) / sqrt(2 * pi)
+normal_prior_log_gradient <- function(x) {
+ sapply(x, function(a) {
+   -a * exp(-0.5 * a ^ 2) / sqrt(2 * pi) / (exp(-0.5 * a ^ 2) / sqrt(2 * pi))
+ })
 }
 set.seed(1234)
 mean.samples <- ELHMC(initial = c(0.96, 0.97), data = x, fun = f, dfun = df,
                      n.samples = 50, prior = normal_prior,
-                     dprior = normal_prior_gradient)
+                     dprior = normal_prior_log_gradient)
 plot(mean.samples$samples, type = "l", xlab = "", ylab = "")
 }
 }
