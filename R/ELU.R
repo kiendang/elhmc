@@ -24,7 +24,7 @@ ELU <- function(x, data, fun, dfun, prior, dprior, tol) {
   {
     dellogL[i, ] <- el$wts[i] * t(as.matrix(el$lambda)) %*% fun.gradients[i, , ]
   }
-  gradient <- apply(dellogL, 2, sum) - density.gradient
+  gradient <- plyr::aaply(dellogL, 2, sum) - density.gradient
 
   result <- u
   attr(result, "gradient") <- gradient
