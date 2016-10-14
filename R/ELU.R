@@ -21,8 +21,7 @@ ELU <- function(x, data, fun, dfun, prior, dprior, tol) {
   u <- - sum(log(density)) - sum(log(el$wts / length(el$wts)))
 
   dellogL <- array(0, c(length(el$wts), length(x)))
-  for (i in 1:NROW(data))
-  {
+  for (i in 1:NROW(data)) {
     dellogL[i, ] <- el$wts[i] * t(as.matrix(el$lambda)) %*% fun.gradients[i, , ]
   }
   gradient <- unname(aaply(dellogL, 2, sum)) - density.gradient
