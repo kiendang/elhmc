@@ -173,7 +173,8 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
 
   current.value <- initial
   
-  progress.bar <- utils::txtProgressBar(min = 1, max = n.samples, initial = 1)
+  progress.bar <- utils::txtProgressBar(min = 1, max = n.samples, initial = 1,
+                                        style = 3)
   on.exit(close(progress.bar))
   
   for(i in 2:n.samples) {
