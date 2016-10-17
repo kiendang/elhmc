@@ -172,6 +172,10 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
   }
 
   current.value <- initial
+  
+  progress.bar <- utils::txtProgressBar(min = 1, max = n.samples, initial = 1)
+  on.exit(close(progress.bar))
+  
   for(i in 2:n.samples) {
     next.sample <- HMC(current.value, U = ELU, epsilon = epsilon,
                        lf.steps = lf.steps, detailed = detailed,
@@ -191,6 +195,8 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
       trajectory.q[[i - 1]] <- next.sample$trajectory$trajectory.q
       trajectory.p[[i - 1]] <- next.sample$trajectory$trajectory.p
     }
+    
+    utils::setTxtProgressBar(progress.bar, i)
   }
 
   acceptance.rate <- sum(acceptance) / (n.samples - 1)
