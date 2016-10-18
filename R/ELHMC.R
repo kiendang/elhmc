@@ -43,6 +43,7 @@
 #'@return The function returns a list with the following elements:
 #'  \item{\code{samples}}{A matrix containing the parameter samples}
 #'  \item{\code{acceptance.rate}}{The acceptance rate}
+#'  \item{\code{call}}{The matched call}
 #'
 #'  If \code{detailed = TRUE}, the list contains these extra elements:
 #'  \item{\code{proposed}}{A matrix containing the proposed values at
@@ -153,6 +154,8 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
   if(tol <= 0) {
     stop("tol must be positive")
   }
+  
+  cl <- match.call()
 
   n.samples = floor(n.samples)
   lf.steps = floor(lf.steps)
@@ -203,7 +206,8 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
   acceptance.rate <- sum(acceptance) / (n.samples - 1)
 
   if(!detailed) {
-    return(list(samples = samples, acceptance.rate = acceptance.rate))
+    return(list(samples = samples, acceptance.rate = acceptance.rate,
+                call = cl))
   }
 
   trajectory <- list(trajectory.q = trajectory.q,
@@ -212,7 +216,8 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
                   acceptance.rate = acceptance.rate,
                   proposed = proposed,
                   acceptance = acceptance,
-                  trajectory = trajectory)
+                  trajectory = trajectory,
+                  call = cl)
 
   return(results)
 }

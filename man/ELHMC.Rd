@@ -50,6 +50,7 @@ with extra information.}
 The function returns a list with the following elements:
  \item{\code{samples}}{A matrix containing the parameter samples}
  \item{\code{acceptance.rate}}{The acceptance rate}
+ \item{\code{call}}{The matched call}
 
  If \code{detailed = TRUE}, the list contains these extra elements:
  \item{\code{proposed}}{A matrix containing the proposed values at
