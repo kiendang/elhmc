@@ -2,11 +2,11 @@
 ELU <- function(x, data, fun, dfun, prior, dprior, tol) {
   fun.results <- unname(aaply(data, 1, function(d) {
     fun(params = x, x = d)
-  }))
+  }, .drop = FALSE))
 
   fun.gradients <- unname(aaply(data, 1, function(d) {
     dfun(params = x, x = d)
-  }))
+  }, .drop = FALSE))
 
   density <- prior(x)
   density.gradient <- dprior(x)
