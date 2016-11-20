@@ -107,13 +107,13 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
     stop("data must be a numeric matrix")
   }
 
-  if(!CheckFuncArgs(fun, c("params", "x"))) {
-    stop("fun must be a function with only two arguments \"params\" and \"x\"")
-  }
-
-  if(!CheckFuncArgs(dfun, c("params", "x"))) {
-    stop("dfun must be a function with only two arguments \"params\" and \"x\"")
-  }
+  # if(!CheckFuncArgs(fun, c("params", "x"))) {
+  #   stop("fun must be a function with only two arguments \"params\" and \"x\"")
+  # }
+  # 
+  # if(!CheckFuncArgs(dfun, c("params", "x"))) {
+  #   stop("dfun must be a function with only two arguments \"params\" and \"x\"")
+  # }
 
   if(!CheckFuncArgs(prior, "x")) {
     stop("prior must be a function with only one argument \"x\"")
