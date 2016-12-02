@@ -1,8 +1,8 @@
 #'@importFrom plyr aaply
 ELU <- function(x, data, fun, dfun, prior, dprior, tol) {
-  fun.results <- unname(do.call(fun, list(params = x, data = data)))
+  fun.results <- unname(do.call(fun, list(params = x, X = data)))
 
-  fun.gradients <- unname(do.call(dfun, list(params = x, data = data)))
+  fun.gradients <- unname(do.call(dfun, list(params = x, X = data)))
 
   density <- prior(x)
   density.gradient <- dprior(x)

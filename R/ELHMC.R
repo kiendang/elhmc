@@ -28,6 +28,8 @@
 #'@param tol EL tolerance
 #'@param detailed If this is set to \code{TRUE}, the function will return a list
 #'  with extra information.
+#'@param FUN FUN
+#'@param DFUN DFUN
 #'@details Suppose there are data \eqn{x = (x_1, x_2, ..., x_n)} where \eqn{x_i}
 #'  takes values in \eqn{R^p} and follow probability distribution \eqn{F}.
 #'  Also, \eqn{F} comes from a family of distributions that depends on
@@ -93,12 +95,13 @@
 #'  \emph{Handbook of Markov Chain Monte Carlo}
 #'  (eds S. Brooks, A.Gelman, G. L.Jones and X.-L. Meng), pp. 113-162.
 #'  New York: Taylor and Francis.
+#'@importFrom plyr aaply
 #'@export
 #'
 ELHMC <- function(initial, data, fun, dfun, prior, dprior,
                   n.samples = 100, lf.steps = 10, epsilon = 0.05,
                   p.variance = 1, tol = 10^-5,
-                  detailed = FALSE) {
+                  detailed = FALSE, FUN, DFUN) {
   if(!(is.vector(initial) && is.numeric(initial))) {
     stop("initial must be a number or a numeric vector")
   }
@@ -106,15 +109,7 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
   if(!(is.matrix(data) && is.numeric(data))) {
     stop("data must be a numeric matrix")
   }
-
-  # if(!CheckFuncArgs(fun, c("params", "x"))) {
-  #   stop("fun must be a function with only two arguments \"params\" and \"x\"")
-  # }
-  # 
-  # if(!CheckFuncArgs(dfun, c("params", "x"))) {
-  #   stop("dfun must be a function with only two arguments \"params\" and \"x\"")
-  # }
-
+  
   if(!CheckFuncArgs(prior, "x")) {
     stop("prior must be a function with only one argument \"x\"")
   }
@@ -155,6 +150,47 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
     stop("tol must be positive")
   }
   
+  if(missing(FUN)) {
+    if(missing(fun)) {
+      stop("either fun or FUN (but not both) must be provided")
+    }
+    
+    if(!CheckFuncArgs(fun, c("params", "x"))) {
+      stop("fun must be a function with only two arguments \"params\" and \"x\"")
+    }
+    
+    FUN <- function(params, X) {
+      unname(aaply(X, 1, function(d) {
+        fun(params = params, x = d)
+      }, .drop = FALSE))
+    }
+  } else {
+    if(!CheckFuncArgs(FUN, c("params", "X"))) {
+      stop("FUN must be a function with only two arguments \"params\" and \"X\"")
+    }
+  }
+  
+  if(missing(DFUN)) {
+    if(missing(dfun)) {
+      stop("either dfun or DFUN (but not both) must be provided")
+    }
+    
+    if(!CheckFuncArgs(dfun, c("params", "x"))) {
+      stop("dfun must be a function with only two arguments \"params\" and \"x\"")
+    }
+    
+    DFUN <- function(params, X) {
+      result <- unname(aaply(X, 1, function(d) {
+        dfun(params = params, x = d)
+      }, .drop = FALSE))
+      result <- unname(aperm(result, c(2, 3, 1)))
+    }
+  } else {
+    if(!CheckFuncArgs(DFUN, c("params", "X"))) {
+      stop("DFUN must be a function with only two arguments \"params\" and \"X\"")
+    }
+  }
+  
   cl <- match.call()
 
   n.samples = floor(n.samples)
@@ -183,7 +219,7 @@ ELHMC <- function(initial, data, fun, dfun, prior, dprior,
   for(i in 2:n.samples) {
     next.sample <- HMC(current.value, U = ELU, epsilon = epsilon,
                        lf.steps = lf.steps, detailed = detailed,
-                       data = data, fun = fun, dfun = dfun,
+                       data = data, fun = FUN, dfun = DFUN,
                        prior = prior, dprior = dprior, p.variance = p.variance,
                        tol = tol)
     samples[i, ] <- current.value <- if(next.sample$accepted) {

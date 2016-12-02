@@ -6,7 +6,7 @@
 \usage{
 ELHMC(initial, data, fun, dfun, prior, dprior, n.samples = 100,
   lf.steps = 10, epsilon = 0.05, p.variance = 1, tol = 10^-5,
-  detailed = FALSE)
+  detailed = FALSE, FUN, DFUN)
 }
 \arguments{
 \item{initial}{A vector containing the initial values of the parameters}
@@ -45,6 +45,10 @@ a vector of the same length as \code{initial}.}
 
 \item{detailed}{If this is set to \code{TRUE}, the function will return a list
 with extra information.}
+
+\item{FUN}{FUN}
+
+\item{DFUN}{DFUN}
 }
 \value{
 The function returns a list with the following elements:
