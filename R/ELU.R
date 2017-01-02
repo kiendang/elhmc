@@ -14,7 +14,7 @@ ELU <- function(x, data, fun, dfun, prior, dprior, tol) {
                 "Mean of EL weights is not close enough to 1.")
   }
 
-  u <- - sum(log(density)) - sum(log(el$wts / length(el$wts)))
+  u <- - log(density) - sum(log(el$wts / length(el$wts)))
 
   dellogL <- array(0, c(length(el$wts), length(x)))
   for (i in 1:NROW(data)) {
