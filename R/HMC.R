@@ -4,12 +4,16 @@ HMC <- function(initial, U, epsilon = 0.05, lf.steps = 10, p.variance = 1,
                 detailed = FALSE, ...) {
   n <- length(initial)
   
-  if(length(p.variance) == 1) {
-    p.variance <- rep(p.variance, n)
+  if(!is.matrix(p.variance)) {
+    if(length(p.variance) == 1) {
+      p.variance <- diag(rep(p.variance, n))
+    } else {
+      p.variance <- diag(p.variance)
+    }
   }
   
   current.q <- q <- initial
-  current.p <- p <- mvrnorm(1, rep(0, n), diag(p.variance))
+  current.p <- p <- mvrnorm(1, rep(0, n), p.variance)
 
   if(detailed) {
     n.row.q <- lf.steps + 1
