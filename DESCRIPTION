@@ -2,8 +2,8 @@ Package: elhmc
 Type: Package
 Title: Sampling from a Empirical Likelihood Bayesian Posterior of Parameters
   Using Hamiltonian Monte Carlo
-Version: 1.0.0
-Date: 2016-09-27
+Version: 1.1.0
+Date: 2017-01-02
 Author: Dang Trung Kien <stadtk@nus.edu.sg>, Sanjay Chaudhuri <stasc@nus.edu.sg>, Neo Han Wei <a0086731@u.nus.edu>,
 Maintainer: Sanjay Chaudhuri <stasc@nus.edu.sg>
 Description: A tool to draw samples from a Empirical Likelihood Bayesian posterior
