@@ -3,7 +3,7 @@ Type: Package
 Title: Sampling from a Empirical Likelihood Bayesian Posterior of Parameters
   Using Hamiltonian Monte Carlo
 Version: 1.1.0.9000
-Date: 2017-07-03
+Date: 2017-09-11
 Author: Dang Trung Kien <kien.dang@nus.edu.sg>, Sanjay Chaudhuri <stasc@nus.edu.sg>, Neo Han Wei <a0086731@u.nus.edu>,
 Maintainer: Sanjay Chaudhuri <stasc@nus.edu.sg>
 Description: A tool to draw samples from a Empirical Likelihood Bayesian posterior
@@ -16,4 +16,4 @@ Imports:
   utils
 License: GPL-2
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

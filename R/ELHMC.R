@@ -58,8 +58,8 @@
 #'  If \code{detailed = TRUE}, the list contains these extra elements:
 #'  \item{\code{proposed}}{A matrix containing the proposed values at
 #'    \code{n.samaples - 1} Hamiltonian Monte Carlo updates}
-#'  \item{\code{acceptance}}{A vector of \code{TRUE}/\code{FALSE} values
-#'    indicates whether each proposed value is accepted}
+#'  \item{\code{acceptance}}{A logical vector indicating whether
+#'    each proposed value is accepted}
 #'  \item{\code{trajectory}}{A list with 2 elements \code{trajectory.q} and
 #'    \code{trajectory.p}. These are lists of matrices contraining position and
 #'    momentum values along trajectory in each Hamiltonian Monte Carlo update.}
