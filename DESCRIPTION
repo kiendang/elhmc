@@ -4,7 +4,10 @@ Title: Sampling from a Empirical Likelihood Bayesian Posterior of Parameters
   Using Hamiltonian Monte Carlo
 Version: 1.1.0.9000
 Date: 2017-09-11
-Author: Dang Trung Kien <kien.dang@nus.edu.sg>, Sanjay Chaudhuri <stasc@nus.edu.sg>, Neo Han Wei <a0086731@u.nus.edu>,
+Authors@R: c(
+  person("Trung Kien", "Dang", role = "aut", email = "kiendang@u.nus.edu", comment = c(ORCID = "0000-0001-7562-6495")),
+  person("Sanjay", "Chaudhuri", role = c("aut", "cre"), email = "stasc@nus.edu.sg"),
+  person("Han Wei", "Neo", role = "aut", email = "a0086731@u.nus.edu"))
 Maintainer: Sanjay Chaudhuri <stasc@nus.edu.sg>
 Description: A tool to draw samples from a Empirical Likelihood Bayesian posterior
    of parameters using Hamiltonian Monte Carlo.
